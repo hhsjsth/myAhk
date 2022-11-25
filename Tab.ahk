@@ -218,31 +218,118 @@ $+Tab:: ; When press shift Tab alone
 return
 
 #If, GetKeyState("Tab", "P")
-h::Left
-j::Down
-k::Up
-l::Right
-y::Home
-o::End
-,::PgUp
-m::PgDn
-b::^Left
-w::^Right
+    h::Left
+    j::Down
+    k::Up
+    l::Right
+    y::Home
+    o::End
+    ,::PgUp
+    m::PgDn
+    b::^Left
+    w::^Right
 #If
 
 #If, GetKeyState("Tab", "P") && GetKeyState("Shift", "P")
-h::+Left
-j::+Down
-k::+Up
-l::+Right
-y::+Home
-o::+End
-,::+PgUp
-m::+PgDn
-b::+^Left
-w::+^Right
+    h::+Left
+    j::+Down
+    k::+Up
+    l::+Right
+    y::+Home
+    o::+End
+    ,::+PgUp
+    m::+PgDn
+    b::+^Left
+    w::+^Right
 #If
 
 PrintScreen::^+Tab
 ScrollLock::^Tab
 Pause::Volume_Mute
+
+; #if GetKeyState("RCtrl", "P")
+; #if !WinActive("ahk_class dopus")
+;     Left::+Tab
+;     Right::Tab
+;     return
+; #if
+; #if
+
+; #if !WinActive("ahk_class dopus") && GetKeyState("RCtrl", "P")
+;     Left::+Tab
+;     Right::Tab
+;     return
+; #if WinActive("ahk_class dopus") && GetKeyState("RCtrl", "P")
+;     Left::^Left
+;     Right::^Right
+
+; GroupAdd, G1,,,,(firefox|chrome|msedge|code)
+
+; #if WinActive("ahk_group G1")
+; #if GetKeyState("RCtrl", "P")
+;     Left::+Tab
+;     Right::Tab
+; #if
+
+; #if !WinActive("ahk_group G1")
+; #if GetKeyState("RCtrl", "P")
+;     Left::^Left
+;     Right::^Right
+; #if
+; #if
+
+; ;限定在vscode 程序里面发挥作用
+; #IfWinActive ahk_exe Code.exe	;vscode 的exe 名字叫做Code.exe
+; global MyVar := 0
+; Esc::
+; if (MyVar == 0)
+; {
+; 	sendinput,{Esc}
+; 	sendinput, ^{Space}
+; 	MyVar = 1
+; }
+; else
+; {
+; 	sendinput, ^{Space}
+; 	MyVar = 0
+; }
+; return
+; #If
+
+; #IfWinNotActive ahk_class dopus.exe
+; #if, GetKeyState("RCtrl", "P")
+;     Left::+Tab
+;     Right::Tab
+; #if
+; #IfWinNotActive
+; #if, GetKeyState("RCtrl", "P")
+;     Left::^Left
+;     Right::^Right
+; #if
+
+;限定在 edge 程序里面发挥作用
+; #IfWinActive ahk_exe msedge.exe
+; #if, GetKeyState("RCtrl", "P")
+;     Left::+Tab
+;     Right::Tab
+; #if
+; #If
+
+; ;-----------------------------------------------------------;
+; ; vim 敏感: 在中文注释下, 普通模式和插入模式, 自动切换中英文
+; :*b0:o// ::
+; :*b0:a// ::
+; :*b0:i// ::
+; :*b0:// ::
+; {
+;     setIME("中文")
+; }
+; #HotIf
+; ;-----------------------------------------------------------;
+
+; ;-----------------------------------------------------------;
+; Esc::
+; {
+;     Send "{Esc}"
+;     setIME("EN")
+; }
